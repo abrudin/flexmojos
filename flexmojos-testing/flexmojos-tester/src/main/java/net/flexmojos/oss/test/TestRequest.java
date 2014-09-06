@@ -30,6 +30,8 @@ public class TestRequest
 
     private String[] flashplayerCommand;
 
+    private String flashplayerReturnCodesToIgnore;
+
     private File swf;
 
     private File swfDescriptor;
@@ -60,6 +62,10 @@ public class TestRequest
     public String[] getFlashplayerCommand()
     {
         return this.flashplayerCommand;
+    }
+
+    public String getFlashplayerReturnCodesToIgnore() {
+        return flashplayerReturnCodesToIgnore;
     }
 
     public File getSwf()
@@ -110,6 +116,10 @@ public class TestRequest
     public void setFlashplayerCommand( String... flashplayerCommand )
     {
         this.flashplayerCommand = flashplayerCommand;
+    }
+
+    public void setFlashplayerReturnCodesToIgnore(String flashplayerReturnCodesToIgnore) {
+        this.flashplayerReturnCodesToIgnore = flashplayerReturnCodesToIgnore;
     }
 
     public void setSwf( File swf )

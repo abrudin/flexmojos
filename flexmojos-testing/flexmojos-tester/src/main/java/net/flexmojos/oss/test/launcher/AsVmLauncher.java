@@ -73,6 +73,8 @@ public class AsVmLauncher
 
     private StringBuffer consoleLog = new StringBuffer();
 
+    private String flashplayerReturnCodesToIgnore;
+
     private File log;
 
     private Process process;
@@ -146,6 +148,18 @@ public class AsVmLauncher
 
         getLogger().debug( "[LAUNCHER] " + errorMessage );
 
+        if (flashplayerReturnCodesToIgnore != null &&
+                Arrays.asList(flashplayerReturnCodesToIgnore.split(",")).contains("" + returnCode))
+        {
+            getLogger().warn( "Flashplayer quit with unexpected return code " + returnCode +
+                              " but the code was in the flashPlayerReturnCodesToIgnore, so continuing.");
+            status = ThreadStatus.DONE;
+            return;
+        } else {
+            getLogger().warn( "Flashplayer quit with unexpected return code " + returnCode +
+                              ", to ignore this error, add flashPlayerReturnCodesToIgnore to your configuration" +
+                              " with a comma separated list of return codes to ignore.");
+        }
         status = ThreadStatus.ERROR;
         error = new Error( errorMessage );
     }
@@ -276,6 +290,8 @@ public class AsVmLauncher
         }
 
         allowHeadlessMode = request.getAllowHeadlessMode();
+
+        flashplayerReturnCodesToIgnore = request.getFlashplayerReturnCodesToIgnore();
 
         if ( targetFile == null )
         {

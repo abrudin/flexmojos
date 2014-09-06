@@ -179,6 +179,13 @@ public class TestRunMojo
      */
     private String flashPlayerCommand;
 
+    /**
+     * The flashplayer return codes to ignore
+     *
+     * @parameter default-value="" expression="${flex.flashPlayer.returnCodesToIgnore}"
+     */
+    private String flashPlayerReturnCodesToIgnore;
+
     private int numErrors;
 
     private int numFailures;
@@ -349,6 +356,7 @@ public class TestRunMojo
         testRequest.setTestPort( testPort );
         testRequest.setSwf( swf );
         testRequest.setAllowHeadlessMode( allowHeadlessMode );
+        testRequest.setFlashplayerReturnCodesToIgnore( flashPlayerReturnCodesToIgnore );
         testRequest.setTestTimeout( testTimeout );
         testRequest.setFirstConnectionTimeout( firstConnectionTimeout );
 
