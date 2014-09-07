@@ -148,17 +148,18 @@ public class AsVmLauncher
 
         getLogger().debug( "[LAUNCHER] " + errorMessage );
 
-        if (flashplayerReturnCodesToIgnore != null &&
-                Arrays.asList(flashplayerReturnCodesToIgnore.split(",")).contains("" + returnCode))
-        {
-            getLogger().warn( "Flashplayer quit with unexpected return code " + returnCode +
-                              " but the code was in the flashPlayerReturnCodesToIgnore, so continuing.");
-            status = ThreadStatus.DONE;
-            return;
-        } else {
-            getLogger().warn( "Flashplayer quit with unexpected return code " + returnCode +
-                              ", to ignore this error, add flashPlayerReturnCodesToIgnore to your configuration" +
-                              " with a comma separated list of return codes to ignore.");
+        if ( OSUtils.isLinux() ) {
+            if ( flashplayerReturnCodesToIgnore != null &&
+                    Arrays.asList(flashplayerReturnCodesToIgnore.split(",")).contains("" + returnCode) ) {
+                getLogger().warn("Flashplayer quit with unexpected return code " + returnCode +
+                        " but the code was in the flashPlayerReturnCodesToIgnore, so continuing.");
+                status = ThreadStatus.DONE;
+                return;
+            } else {
+                getLogger().warn("Flashplayer quit with unexpected return code " + returnCode +
+                        ". To ignore this error, add flashPlayerReturnCodesToIgnore to your configuration" +
+                        " with a comma separated list of return codes to ignore.");
+            }
         }
         status = ThreadStatus.ERROR;
         error = new Error( errorMessage );
